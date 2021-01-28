@@ -7,4 +7,7 @@ publish:
 lint:
 	@npx eslint .
 
-.PHONY: install publish lint
+test:
+	@NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
+
+.PHONY: install publish lint test

@@ -74,7 +74,9 @@ const getDiffString = (diffData) => {
 
   diffStringFragments.push('}');
 
-  return diffStringFragments.join('\n');
+  return diffStringFragments.length === 2
+    ? diffStringFragments.join('')
+    : diffStringFragments.join('\n');
 };
 
 const genDiff = (pathOne, pathTwo) => {
