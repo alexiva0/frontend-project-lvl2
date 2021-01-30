@@ -5,7 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/9f79318ce9424b55becc/maintainability)](https://codeclimate.com/github/AlexCarp/frontend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9f79318ce9424b55becc/test_coverage)](https://codeclimate.com/github/AlexCarp/frontend-project-lvl2/test_coverage)
 
-Command line utility for comparing `.json` files.
+Command line utility for comparing `.json` or `.yml` files.
 
 [![asciicast](https://asciinema.org/a/zPcrQXJGvTmwyDXdKqNZoNgxD.svg)](https://asciinema.org/a/zPcrQXJGvTmwyDXdKqNZoNgxD)
 
