@@ -11,20 +11,20 @@ Command line utility for comparing `.json` or `.yml` files.
 
 # Setup
 To install dependencies run: 
-```bash
+```
 make install
 ```
 To install package locally use:
-```bash
+```
 npm link
 ```
 # Usage
 To get difference between two json files run: 
-```bash
+```
 gendiff path/to/file/a.json path/to/file/b.json 
 ```
 To get more information run:
-```bash
+```
 % gendiff -h
 Usage: gendiff [options] <filepath1> <filepath2>
 
