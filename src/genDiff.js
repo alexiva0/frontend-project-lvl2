@@ -1,8 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { uniq } from 'lodash-es';
+import { uniq, isObject } from 'lodash-es';
 
 import getContentParser from './contentParsersFactory.js';
+import formatStylish from './formatters/stylish.js';
 
 const getFileContent = (rawPath) => {
   const parseContent = getContentParser(rawPath);
@@ -31,11 +32,16 @@ const getDiffData = (dataOne, dataTwo) => {
         type: 'deleted',
         value: valueOne,
       };
+    } else if (isObject(valueOne) && isObject(valueTwo)) {
+      acc[key] = {
+        type: 'nested',
+        value: getDiffData(valueOne, valueTwo),
+      };
     } else if (valueOne !== valueTwo) {
       acc[key] = {
         type: 'changed',
         oldValue: valueOne,
-        newValue: valueTwo,
+        value: valueTwo,
       };
     } else {
       acc[key] = {
@@ -48,47 +54,13 @@ const getDiffData = (dataOne, dataTwo) => {
   }, {});
 };
 
-const getLineString = (key, value, prefix = ' ') => `  ${prefix} ${key}: ${value}`;
-
-const getDiffString = (diffData) => {
-  const keys = Object.keys(diffData).sort();
-
-  const diffStringFragments = keys.reduce((acc, key) => {
-    const diff = diffData[key];
-
-    switch (diff.type) {
-      case 'added':
-        acc.push(getLineString(key, diff.value, '+'));
-        break;
-      case 'deleted':
-        acc.push(getLineString(key, diff.value, '-'));
-        break;
-      case 'changed':
-        acc.push(getLineString(key, diff.oldValue, '-'));
-        acc.push(getLineString(key, diff.newValue, '+'));
-        break;
-      default:
-        acc.push(getLineString(key, diff.value));
-        break;
-    }
-
-    return acc;
-  }, ['{']);
-
-  diffStringFragments.push('}');
-
-  return diffStringFragments.length === 2
-    ? diffStringFragments.join('')
-    : diffStringFragments.join('\n');
-};
-
 const genDiff = (pathOne, pathTwo) => {
   const fileOneContent = getFileContent(pathOne);
   const fileTwoContent = getFileContent(pathTwo);
 
   const diff = getDiffData(fileOneContent, fileTwoContent);
 
-  return getDiffString(diff);
+  return formatStylish(diff);
 };
 
 export default genDiff;
