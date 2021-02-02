@@ -3,7 +3,7 @@ import path from 'path';
 import { uniq, isObject } from 'lodash-es';
 
 import getContentParser from './contentParsersFactory.js';
-import formatStylish from './formatters/stylish.js';
+import getFormatter from './formatters/formattersFactory.js';
 
 const getFileContent = (rawPath) => {
   const parseContent = getContentParser(rawPath);
@@ -54,13 +54,15 @@ const getDiffData = (dataOne, dataTwo) => {
   }, {});
 };
 
-const genDiff = (pathOne, pathTwo) => {
+const genDiff = (pathOne, pathTwo, options = { format: 'stylish' }) => {
   const fileOneContent = getFileContent(pathOne);
   const fileTwoContent = getFileContent(pathTwo);
 
   const diff = getDiffData(fileOneContent, fileTwoContent);
 
-  return formatStylish(diff);
+  const formatter = getFormatter(options.format);
+
+  return formatter(diff);
 };
 
 export default genDiff;
