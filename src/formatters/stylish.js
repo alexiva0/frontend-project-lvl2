@@ -36,9 +36,9 @@ const formatStylish = (diffData) => {
       switch (diff.type) {
         case 'added':
           return getStylishLine(indent, '+', key, getValueString(rawValue, depth));
-        case 'deleted':
+        case 'removed':
           return getStylishLine(indent, '-', key, getValueString(rawValue, depth));
-        case 'changed':
+        case 'updated':
           return [
             getStylishLine(indent, '-', key, getValueString(diff.oldValue, depth)),
             getStylishLine(indent, '+', key, getValueString(rawValue, depth)),

@@ -3,7 +3,7 @@ import path from 'path';
 import { uniq, isObject } from 'lodash-es';
 
 import getContentParser from './contentParsers.js';
-import getFormatter from './formatters/formatters.js';
+import getFormatter from './formatters/index.js';
 
 const getFileContent = (rawPath) => {
   const parseContent = getContentParser(rawPath);
@@ -29,7 +29,7 @@ const getDiffData = (dataOne, dataTwo) => {
       };
     } else if (valueTwo === undefined) {
       acc[key] = {
-        type: 'deleted',
+        type: 'removed',
         value: valueOne,
       };
     } else if (isObject(valueOne) && isObject(valueTwo)) {
@@ -39,7 +39,7 @@ const getDiffData = (dataOne, dataTwo) => {
       };
     } else if (valueOne !== valueTwo) {
       acc[key] = {
-        type: 'changed',
+        type: 'updated',
         oldValue: valueOne,
         value: valueTwo,
       };
@@ -54,13 +54,13 @@ const getDiffData = (dataOne, dataTwo) => {
   }, {});
 };
 
-const genDiff = (pathOne, pathTwo, options = { format: 'stylish' }) => {
+const genDiff = (pathOne, pathTwo, format = 'stylish') => {
   const fileOneContent = getFileContent(pathOne);
   const fileTwoContent = getFileContent(pathTwo);
 
   const diff = getDiffData(fileOneContent, fileTwoContent);
 
-  const formatter = getFormatter(options.format);
+  const formatter = getFormatter(format);
 
   return formatter(diff);
 };

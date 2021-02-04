@@ -10,7 +10,7 @@ command
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
-    const diff = genDiff(filepath1, filepath2, options);
+    const diff = genDiff(filepath1, filepath2, options.format);
     console.log(diff);
   });
 
