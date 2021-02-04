@@ -7,7 +7,7 @@
 
 Command line utility for comparing `.json` or `.yml` files.
 
-[![asciicast](https://asciinema.org/a/PyN67hnLJ7crNfI5o4FpGnvq9.svg)](https://asciinema.org/a/PyN67hnLJ7crNfI5o4FpGnvq9)
+[![asciicast](https://asciinema.org/a/QeY0R370e3hzY3R4KkMErSpjR.svg)](https://asciinema.org/a/QeY0R370e3hzY3R4KkMErSpjR)
 
 # Setup
 To install dependencies run: 
