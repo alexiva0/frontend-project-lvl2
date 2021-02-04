@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { uniq, isObject } from 'lodash-es';
 
-import getContentParser from './contentParsersFactory.js';
-import getFormatter from './formatters/formattersFactory.js';
+import getContentParser from './contentParsers.js';
+import getFormatter from './formatters/formatters.js';
 
 const getFileContent = (rawPath) => {
   const parseContent = getContentParser(rawPath);
