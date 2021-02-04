@@ -16,6 +16,17 @@ describe('genDiff', () => {
     );
   });
 
+  test('Throw error on incompatible format', () => {
+    const getPath = buildGetPath(import.meta.url, '../__fixtures__/json');
+    const filePath = getPath('empty1.json');
+
+    const invokeErrorCall = () => genDiff(filePath, filePath, { format: 'colourful' });
+
+    expect(invokeErrorCall).toThrow(
+      'Format colourful is not supported.',
+    );
+  });
+
   describe('Works well with json files', () => {
     const getPath = buildGetPath(import.meta.url, BASE_JSON_PATH);
 
