@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { Command } from 'commander';
+import commander from 'commander';
 import genDiff from '../index.js';
 
-const command = new Command();
+const command = new commander.Command();
 
 command
   .version('1.0.0')
