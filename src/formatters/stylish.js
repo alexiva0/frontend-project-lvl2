@@ -31,6 +31,11 @@ const formatStylish = (diffData) => {
 
     const lines = keys.flatMap((key) => {
       const diff = data[key];
+
+      if (diff.children) {
+        return getStylishLine(indent, ' ', key, iter(diff.children, depth + 1));
+      }
+
       const rawValue = diff.value;
 
       switch (diff.type) {
@@ -43,8 +48,6 @@ const formatStylish = (diffData) => {
             getStylishLine(indent, '-', key, getValueString(diff.oldValue, depth)),
             getStylishLine(indent, '+', key, getValueString(rawValue, depth)),
           ];
-        case 'nested':
-          return getStylishLine(indent, ' ', key, iter(rawValue, depth + 1));
         default:
           return getStylishLine(indent, ' ', key, getValueString(rawValue, depth));
       }
@@ -53,9 +56,7 @@ const formatStylish = (diffData) => {
     lines.unshift('{');
     lines.push(`${bracketsIndent}}`);
 
-    return lines.length === 2
-      ? lines.join('')
-      : lines.join('\n');
+    return lines.length === 2 ? lines.join('') : lines.join('\n');
   };
 
   return iter(diffData, 1);
