@@ -15,7 +15,7 @@ describe('genDiff common tests', () => {
 
   test('Throw error on incompatible format', () => {
     const getPath = buildGetPath(import.meta.url, '../__fixtures__/json');
-    const filePath = getPath('empty1.json');
+    const filePath = getPath('empty.json');
 
     const invokeErrorCall = () => genDiff(filePath, filePath, 'colourful');
 

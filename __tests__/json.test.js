@@ -8,15 +8,13 @@ describe('genDiff json support', () => {
 
   describe('Stylish formatter', () => {
     test('Empty files', () => {
-      const pathOne = getPath('empty1.json');
-      const pathTwo = getPath('empty2.json');
+      const path = getPath('empty.json');
 
-      expect(genDiff(pathOne, pathTwo)).toEqual('{}');
+      expect(genDiff(path, path)).toEqual('{}');
     });
 
     test('Similar files', () => {
-      const pathOne = getPath('similar1.json');
-      const pathTwo = getPath('similar2.json');
+      const path = getPath('similar.json');
 
       const expectedValue = [
         '{',
@@ -26,12 +24,12 @@ describe('genDiff json support', () => {
         '    timeout: 50',
         '}',
       ].join('\n');
-      expect(genDiff(pathOne, pathTwo)).toEqual(expectedValue);
+      expect(genDiff(path, path)).toEqual(expectedValue);
     });
 
     test('Complex changes', () => {
-      const pathOne = getPath('complexDiff1.json');
-      const pathTwo = getPath('complexDiff2.json');
+      const pathOne = getPath('shallowDiff1.json');
+      const pathTwo = getPath('shallowDiff2.json');
 
       const expectedValue = [
         '{',
@@ -102,22 +100,20 @@ describe('genDiff json support', () => {
 
   describe('Plain formatter', () => {
     test('Empty files', () => {
-      const pathOne = getPath('empty1.json');
-      const pathTwo = getPath('empty2.json');
+      const path = getPath('empty.json');
 
-      expect(genDiff(pathOne, pathTwo, 'plain')).toEqual('');
+      expect(genDiff(path, path, 'plain')).toEqual('');
     });
 
     test('Similar files', () => {
-      const pathOne = getPath('similar1.json');
-      const pathTwo = getPath('similar2.json');
+      const path = getPath('similar.json');
 
-      expect(genDiff(pathOne, pathTwo, 'plain')).toEqual('');
+      expect(genDiff(path, path, 'plain')).toEqual('');
     });
 
     test('Complex changes', () => {
-      const pathOne = getPath('complexDiff1.json');
-      const pathTwo = getPath('complexDiff2.json');
+      const pathOne = getPath('shallowDiff1.json');
+      const pathTwo = getPath('shallowDiff2.json');
 
       const expectedValue = [
         "Property 'follow' was removed",
@@ -151,15 +147,13 @@ describe('genDiff json support', () => {
 
   describe('JSON formatter', () => {
     test('Empty files', () => {
-      const pathOne = getPath('empty1.json');
-      const pathTwo = getPath('empty2.json');
+      const path = getPath('empty.json');
 
-      expect(genDiff(pathOne, pathTwo, 'json')).toEqual('{}');
+      expect(genDiff(path, path, 'json')).toEqual('{}');
     });
 
     test('Similar files', () => {
-      const pathOne = getPath('similar1.json');
-      const pathTwo = getPath('similar2.json');
+      const path = getPath('similar.json');
 
       const expectedValue = [
         '{',
@@ -181,12 +175,12 @@ describe('genDiff json support', () => {
         '    }',
         '}',
       ].join('\n');
-      expect(genDiff(pathOne, pathTwo, 'json')).toEqual(expectedValue);
+      expect(genDiff(path, path, 'json')).toEqual(expectedValue);
     });
 
     test('Complex changes', () => {
-      const pathOne = getPath('complexDiff1.json');
-      const pathTwo = getPath('complexDiff2.json');
+      const pathOne = getPath('shallowDiff1.json');
+      const pathTwo = getPath('shallowDiff2.json');
 
       const expectedValue = [
         '{',
