@@ -7,8 +7,6 @@
 
 Command line utility for comparing `.json` or `.yml` files.
 
-[![asciicast](https://asciinema.org/a/QeY0R370e3hzY3R4KkMErSpjR.svg)](https://asciinema.org/a/QeY0R370e3hzY3R4KkMErSpjR)
-
 # Setup
 To install dependencies run: 
 ```
@@ -28,11 +26,24 @@ To get more information run:
 % gendiff -h
 Usage: gendiff [options] <filepath1> <filepath2>
 
-Compares two configuration files and shows a difference.
+Compares two configuration files and shows a difference. Files with JSON and YAML files are supported.
 
 Options:
   -V, --version        output the version number
-  -f, --format [type]  output format
+  -f, --format [type]  output format (default: "stylish")
   -h, --help           display help for command
 ```
+
+## Comparing JSON files with `stylish` (default) output format
+[![asciicast](https://asciinema.org/a/HaD2zlH7fURU081cOYl3Nubt2.svg)](https://asciinema.org/a/HaD2zlH7fURU081cOYl3Nubt2)
+
+## Comparing JSON files with `plain` output format
+[![asciicast](https://asciinema.org/a/kC2dNnuDTLVaqEztoOToMwJ6m.svg)](https://asciinema.org/a/kC2dNnuDTLVaqEztoOToMwJ6m)
+
+## Comparing JSON files with `json` output format
+[![asciicast](https://asciinema.org/a/BZLIv3y2h5frOrqwYIF0i3TNF.svg)](https://asciinema.org/a/BZLIv3y2h5frOrqwYIF0i3TNF)
+
+## Comparing YAML files with default output format
+[![asciicast](https://asciinema.org/a/GYx1YPBX3dMKl3ZDomlKCmJoj.svg)](https://asciinema.org/a/GYx1YPBX3dMKl3ZDomlKCmJoj)
+
 
