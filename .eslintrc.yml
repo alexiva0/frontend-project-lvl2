@@ -7,10 +7,13 @@ extends:
 parserOptions:
   ecmaVersion: 12
   sourceType: module
+plugins: ["fp"]
 rules:
   no-console: error
   import/extensions: off
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
+  fp/no-mutating-methods: error
+  fp/no-mutation: error
 overrides: [
     {
       files: ["bin/**/*"],
