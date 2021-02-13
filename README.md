@@ -33,17 +33,17 @@ Options:
   -f, --format [type]  output format (default: "stylish")
   -h, --help           display help for command
 ```
-
-## Comparing JSON files with `stylish` (default) output format
+## Usage examples
+### Comparing JSON files with `stylish` (default) output format
 [![asciicast](https://asciinema.org/a/HaD2zlH7fURU081cOYl3Nubt2.svg)](https://asciinema.org/a/HaD2zlH7fURU081cOYl3Nubt2)
 
-## Comparing JSON files with `plain` output format
+### Comparing JSON files with `plain` output format
 [![asciicast](https://asciinema.org/a/kC2dNnuDTLVaqEztoOToMwJ6m.svg)](https://asciinema.org/a/kC2dNnuDTLVaqEztoOToMwJ6m)
 
-## Comparing JSON files with `json` output format
+### Comparing JSON files with `json` output format
 [![asciicast](https://asciinema.org/a/BZLIv3y2h5frOrqwYIF0i3TNF.svg)](https://asciinema.org/a/BZLIv3y2h5frOrqwYIF0i3TNF)
 
-## Comparing YAML files with default output format
+### Comparing YAML files with default output format
 [![asciicast](https://asciinema.org/a/GYx1YPBX3dMKl3ZDomlKCmJoj.svg)](https://asciinema.org/a/GYx1YPBX3dMKl3ZDomlKCmJoj)
 
 
