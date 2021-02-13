@@ -41,7 +41,7 @@ Options:
 [![asciicast](https://asciinema.org/a/kC2dNnuDTLVaqEztoOToMwJ6m.svg)](https://asciinema.org/a/kC2dNnuDTLVaqEztoOToMwJ6m)
 
 ### Comparing JSON files with `json` output format
-[![asciicast](https://asciinema.org/a/BZLIv3y2h5frOrqwYIF0i3TNF.svg)](https://asciinema.org/a/BZLIv3y2h5frOrqwYIF0i3TNF)
+[![asciicast](https://asciinema.org/a/5GQYYds6uiuW2fL8Td5QzDpSA.svg)](https://asciinema.org/a/5GQYYds6uiuW2fL8Td5QzDpSA)
 
 ### Comparing YAML files with default output format
 [![asciicast](https://asciinema.org/a/GYx1YPBX3dMKl3ZDomlKCmJoj.svg)](https://asciinema.org/a/GYx1YPBX3dMKl3ZDomlKCmJoj)
