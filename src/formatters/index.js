@@ -10,6 +10,10 @@ const getFormatter = (format) => {
     return formatPlain;
   }
 
+  if (format === 'json') {
+    return (data) => JSON.stringify(data, null, 4);
+  }
+
   throw new Error(`Format ${format} is not supported.`);
 };
 
