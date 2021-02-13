@@ -24,28 +24,27 @@ const getValueString = (rawValue, depth) => (isObject(rawValue)
   : rawValue);
 
 const formatStylish = (diffData) => {
-  const iter = (data, depth) => {
-    const keys = Object.keys(data).sort();
+  const iter = (diffNodes, depth) => {
     const indent = (' '.repeat(4 * depth - 2));
     const bracketsIndent = (' '.repeat(4 * (depth - 1)));
 
-    const lines = keys.flatMap((key) => {
-      const diff = data[key];
-
-      if (diff.children) {
-        return getStylishLine(indent, ' ', key, iter(diff.children, depth + 1));
+    const lines = diffNodes.flatMap(({
+      key, type, value, children, oldValue,
+    }) => {
+      if (children) {
+        return getStylishLine(indent, ' ', key, iter(children, depth + 1));
       }
 
-      const rawValue = diff.value;
+      const rawValue = value;
 
-      switch (diff.type) {
+      switch (type) {
         case 'added':
           return getStylishLine(indent, '+', key, getValueString(rawValue, depth));
         case 'removed':
           return getStylishLine(indent, '-', key, getValueString(rawValue, depth));
         case 'updated':
           return [
-            getStylishLine(indent, '-', key, getValueString(diff.oldValue, depth)),
+            getStylishLine(indent, '-', key, getValueString(oldValue, depth)),
             getStylishLine(indent, '+', key, getValueString(rawValue, depth)),
           ];
         default:
@@ -53,10 +52,13 @@ const formatStylish = (diffData) => {
       }
     });
 
-    lines.unshift('{');
-    lines.push(`${bracketsIndent}}`);
+    const separator = lines.length === 0 ? '' : '\n';
 
-    return lines.length === 2 ? lines.join('') : lines.join('\n');
+    return [
+      '{',
+      ...lines,
+      `${bracketsIndent}}`,
+    ].join(separator);
   };
 
   return iter(diffData, 1);

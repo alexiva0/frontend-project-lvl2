@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { uniq, isObject } from 'lodash-es';
+import { uniq, isObject, sortBy } from 'lodash-es';
 
 import getContentParser from './contentParsers.js';
 import getFormatter from './formatters/index.js';
@@ -13,45 +13,68 @@ const getFileContent = (rawPath) => {
 };
 
 const getDiffData = (dataOne, dataTwo) => {
-  const keys = uniq([
+  const keys = sortBy(uniq([
     ...Object.keys(dataOne ?? {}),
     ...Object.keys(dataTwo ?? {}),
-  ])
-    .sort();
+  ]));
+
   return keys.reduce((acc, key) => {
     const valueOne = dataOne[key];
     const valueTwo = dataTwo[key];
 
-    if (valueOne === undefined) {
-      acc[key] = {
-        type: 'added',
-        value: valueTwo,
-      };
-    } else if (valueTwo === undefined) {
-      acc[key] = {
-        type: 'removed',
-        value: valueOne,
-      };
-    } else if (isObject(valueOne) && isObject(valueTwo)) {
-      acc[key] = {
-        type: 'nested',
-        children: getDiffData(valueOne, valueTwo),
-      };
-    } else if (valueOne !== valueTwo) {
-      acc[key] = {
-        type: 'updated',
-        oldValue: valueOne,
-        value: valueTwo,
-      };
-    } else {
-      acc[key] = {
-        type: 'unchanged',
-        value: valueOne,
-      };
-    }
+    switch (true) {
+      case (valueOne === undefined):
+        return [
+          ...acc,
+          {
+            key,
+            type: 'added',
+            value: valueTwo,
+          },
+        ];
 
-    return acc;
-  }, {});
+      case (valueTwo === undefined):
+        return [
+          ...acc,
+          {
+            key,
+            type: 'removed',
+            value: valueOne,
+          },
+        ];
+
+      case (isObject(valueOne) && isObject(valueTwo)):
+        return [
+          ...acc,
+          {
+            key,
+            type: 'nested',
+            children: getDiffData(valueOne, valueTwo),
+          },
+        ];
+
+      case (valueOne !== valueTwo):
+        return [
+          ...acc,
+          {
+            key,
+            type: 'updated',
+            oldValue: valueOne,
+            value: valueTwo,
+          },
+        ];
+
+      default:
+        return [
+          ...acc,
+          {
+            key,
+            type: 'unchanged',
+            value: valueOne,
+          },
+        ];
+    }
+  }, []);
 };
 
 const genDiff = (pathOne, pathTwo, format = 'stylish') => {

@@ -20,21 +20,17 @@ const getPlainLine = (diff, path) => `Property '${path}' was ${diff.type}${getLi
 
 const formatPlain = (diffData) => {
   const iter = (data, path = '') => {
-    const keys = Object.keys(data);
+    const nodesToPrint = data.filter(({ type }) => type !== 'unchanged');
 
-    return keys
-      .filter((key) => data[key].type !== 'unchanged')
-      .sort()
-      .map((key) => {
-        const diff = data[key];
-        const fullPath = path === '' ? key : `${path}.${key}`;
+    return nodesToPrint.map((diffNode) => {
+      const fullPath = path === '' ? diffNode.key : `${path}.${diffNode.key}`;
 
-        if (diff.type === 'nested') {
-          return iter(diff.children, fullPath);
-        }
+      if (diffNode.type === 'nested') {
+        return iter(diffNode.children, fullPath);
+      }
 
-        return getPlainLine(diff, fullPath);
-      }).join('\n');
+      return getPlainLine(diffNode, fullPath);
+    }).join('\n');
   };
 
   return iter(diffData);
