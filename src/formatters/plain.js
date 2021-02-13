@@ -23,13 +23,13 @@ const formatPlain = (diffData) => {
     const keys = Object.keys(data);
 
     return keys
-      .filter((key) => data[key].type || data[key].children)
+      .filter((key) => data[key].type !== 'unchanged')
       .sort()
       .map((key) => {
         const diff = data[key];
         const fullPath = path === '' ? key : `${path}.${key}`;
 
-        if (diff.children) {
+        if (diff.type === 'nested') {
           return iter(diff.children, fullPath);
         }
 

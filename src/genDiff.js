@@ -34,6 +34,7 @@ const getDiffData = (dataOne, dataTwo) => {
       };
     } else if (isObject(valueOne) && isObject(valueTwo)) {
       acc[key] = {
+        type: 'nested',
         children: getDiffData(valueOne, valueTwo),
       };
     } else if (valueOne !== valueTwo) {
@@ -44,6 +45,7 @@ const getDiffData = (dataOne, dataTwo) => {
       };
     } else {
       acc[key] = {
+        type: 'unchanged',
         value: valueOne,
       };
     }
