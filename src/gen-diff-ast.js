@@ -1,18 +1,6 @@
-import fs from 'fs';
-import path from 'path';
 import { uniq, isObject, sortBy } from 'lodash-es';
 
-import getContentParser from './contentParsers.js';
-import getFormatter from './formatters/index.js';
-
-const getFileContent = (rawPath) => {
-  const parseContent = getContentParser(rawPath);
-  const absolutePath = path.resolve(process.cwd(), rawPath);
-  const fileRawContent = fs.readFileSync(absolutePath, 'utf8');
-  return parseContent(fileRawContent);
-};
-
-const getDiffData = (dataOne, dataTwo) => {
+const getDiffAST = (dataOne, dataTwo) => {
   const keys = sortBy(uniq([
     ...Object.keys(dataOne ?? {}),
     ...Object.keys(dataTwo ?? {}),
@@ -49,7 +37,7 @@ const getDiffData = (dataOne, dataTwo) => {
           {
             key,
             type: 'nested',
-            children: getDiffData(valueOne, valueTwo),
+            children: getDiffAST(valueOne, valueTwo),
           },
         ];
 
@@ -77,15 +65,4 @@ const getDiffData = (dataOne, dataTwo) => {
   }, []);
 };
 
-const genDiff = (pathOne, pathTwo, format = 'stylish') => {
-  const fileOneContent = getFileContent(pathOne);
-  const fileTwoContent = getFileContent(pathTwo);
-
-  const diff = getDiffData(fileOneContent, fileTwoContent);
-
-  const formatter = getFormatter(format);
-
-  return formatter(diff);
-};
-
-export default genDiff;
+export default getDiffAST;

@@ -1,4 +1,4 @@
-import genDiff from '../src/genDiff.js';
+import genDiff from '../index.js';
 import buildGetPath from './utils/getPathFactory.js';
 
 const BASE_JSON_PATH = '../__fixtures__/json';
