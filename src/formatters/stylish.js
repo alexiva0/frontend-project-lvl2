@@ -19,36 +19,34 @@ const getObjectString = (data, depth) => {
 
 const getStylishLine = (indent, prefix, key, value) => `${indent}${prefix} ${key}: ${value}`;
 
-const getValueString = (rawValue, depth) => (isObject(rawValue)
-  ? getObjectString(rawValue, depth + 1)
-  : rawValue);
+const getValueString = (value, depth) => (isObject(value)
+  ? getObjectString(value, depth + 1)
+  : value);
 
-const formatStylish = (diffData) => {
-  const iter = (diffNodes, depth) => {
+const formatStylish = (diffAST) => {
+  const iter = (ast, depth) => {
     const indent = (' '.repeat(4 * depth - 2));
     const bracketsIndent = (' '.repeat(4 * (depth - 1)));
 
-    const lines = diffNodes.flatMap(({
+    const lines = ast.flatMap(({
       key, type, value, children, oldValue,
     }) => {
       if (children) {
         return getStylishLine(indent, ' ', key, iter(children, depth + 1));
       }
 
-      const rawValue = value;
-
       switch (type) {
         case 'added':
-          return getStylishLine(indent, '+', key, getValueString(rawValue, depth));
+          return getStylishLine(indent, '+', key, getValueString(value, depth));
         case 'removed':
-          return getStylishLine(indent, '-', key, getValueString(rawValue, depth));
+          return getStylishLine(indent, '-', key, getValueString(value, depth));
         case 'updated':
           return [
             getStylishLine(indent, '-', key, getValueString(oldValue, depth)),
-            getStylishLine(indent, '+', key, getValueString(rawValue, depth)),
+            getStylishLine(indent, '+', key, getValueString(value, depth)),
           ];
         default:
-          return getStylishLine(indent, ' ', key, getValueString(rawValue, depth));
+          return getStylishLine(indent, ' ', key, getValueString(value, depth));
       }
     });
 
@@ -61,7 +59,7 @@ const formatStylish = (diffData) => {
     ].join(separator);
   };
 
-  return iter(diffData, 1);
+  return iter(diffAST, 1);
 };
 
 export default formatStylish;

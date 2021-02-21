@@ -18,7 +18,7 @@ const getLinePostfix = (diff) => {
 
 const getPlainLine = (diff, path) => `Property '${path}' was ${diff.type}${getLinePostfix(diff)}`;
 
-const formatPlain = (diffData) => {
+const formatPlain = (diffAST) => {
   const iter = (data, path = '') => {
     const nodesToPrint = data.filter(({ type }) => type !== 'unchanged');
 
@@ -33,7 +33,7 @@ const formatPlain = (diffData) => {
     }).join('\n');
   };
 
-  return iter(diffData);
+  return iter(diffAST);
 };
 
 export default formatPlain;
