@@ -1,5 +1,5 @@
-import getFileContent from './src/get-file-content';
-import getDiffAST from './src/gen-diff-ast';
+import getFileContent from './src/get-file-content.js';
+import getDiffAST from './src/gen-diff-ast.js';
 import getFormatter from './src/formatters/index.js';
 
 const genDiff = (pathOne, pathTwo, format = 'stylish') => {
