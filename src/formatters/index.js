@@ -1,20 +1,19 @@
 import formatStylish from './stylish.js';
 import formatPlain from './plain.js';
+import formatJson from './json.js';
+
+const FORMATTERS = {
+  stylish: formatStylish,
+  plain: formatPlain,
+  json: formatJson,
+};
 
 const getFormatter = (format) => {
-  if (format === 'stylish') {
-    return formatStylish;
+  if (!(format in FORMATTERS)) {
+    throw new Error(`Format ${format} is not supported.`);
   }
 
-  if (format === 'plain') {
-    return formatPlain;
-  }
-
-  if (format === 'json') {
-    return (data) => JSON.stringify(data, null, 4);
-  }
-
-  throw new Error(`Format ${format} is not supported.`);
+  return FORMATTERS[format];
 };
 
 export default getFormatter;
