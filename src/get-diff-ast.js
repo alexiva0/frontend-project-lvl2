@@ -20,6 +20,7 @@ const getDiffNode = (valueOne, valueTwo, key) => {
       return {
         key,
         type: 'nested',
+        // eslint-disable-next-line no-use-before-define
         children: getDiffAST(valueOne, valueTwo),
       };
 
