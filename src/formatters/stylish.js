@@ -29,7 +29,7 @@ const getValueString = (value, depth) => (isObject(value)
   : value);
 
 const formatStylish = (diffAST) => {
-  const iter = (ast, depth) => {
+  const getStylishOutput = (ast, depth) => {
     const indent = (INDENT_CHAR.repeat(4 * depth - 2));
     const bracketsIndent = (INDENT_CHAR.repeat(4 * (depth - 1)));
 
@@ -37,7 +37,7 @@ const formatStylish = (diffAST) => {
       key, type, value, children, oldValue,
     }) => {
       if (children) {
-        return getStylishLine(indent, INDENT_CHAR, key, iter(children, depth + 1));
+        return getStylishLine(indent, INDENT_CHAR, key, getStylishOutput(children, depth + 1));
       }
 
       switch (type) {
@@ -64,7 +64,7 @@ const formatStylish = (diffAST) => {
     ].join(separator);
   };
 
-  return iter(diffAST, 1);
+  return getStylishOutput(diffAST, 1);
 };
 
 export default formatStylish;

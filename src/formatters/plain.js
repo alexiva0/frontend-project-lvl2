@@ -19,21 +19,21 @@ const getLinePostfix = (diff) => {
 const getPlainLine = (diff, path) => `Property '${path}' was ${diff.type}${getLinePostfix(diff)}`;
 
 const formatPlain = (diffAST) => {
-  const iter = (data, path = '') => {
+  const getPlainOutput = (data, path = '') => {
     const nodesToPrint = data.filter(({ type }) => type !== 'unchanged');
 
     return nodesToPrint.map((diffNode) => {
       const fullPath = path === '' ? diffNode.key : `${path}.${diffNode.key}`;
 
       if (diffNode.type === 'nested') {
-        return iter(diffNode.children, fullPath);
+        return getPlainOutput(diffNode.children, fullPath);
       }
 
       return getPlainLine(diffNode, fullPath);
     }).join('\n');
   };
 
-  return iter(diffAST);
+  return getPlainOutput(diffAST);
 };
 
 export default formatPlain;
