@@ -1,4 +1,3 @@
-import path from 'path';
 import YAML from 'yaml';
 
 const JSON_EXTENSION = '.json';
@@ -9,14 +8,12 @@ const PARSERS = {
   [YAML_EXTENSION]: YAML.parse,
 };
 
-const getContentParser = (filePath) => {
-  const ext = path.extname(filePath);
-
-  if (!(ext in PARSERS)) {
-    throw new Error(`Comparison of '${ext}' files is not supported.`);
+const getContentParser = (fileExt) => {
+  if (!(fileExt in PARSERS)) {
+    throw new Error(`Comparison of '${fileExt}' files is not supported.`);
   }
 
-  return PARSERS[ext];
+  return PARSERS[fileExt];
 };
 
 export default getContentParser;
