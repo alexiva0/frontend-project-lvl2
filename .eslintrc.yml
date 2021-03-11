@@ -14,6 +14,7 @@ rules:
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
   fp/no-mutating-methods: error
   fp/no-mutation: error
+  no-use-before-define: [error, { "functions": false }]
 overrides: [
     {
       files: ["bin/**/*"],
