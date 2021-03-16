@@ -20,8 +20,6 @@ const getDiffNode = (valueOne, valueTwo, key) => {
       return {
         key,
         type: 'nested',
-        // eslint-disable-next-line no-use-before-define
-        children: getDiffAST(valueOne, valueTwo),
       };
 
     case (valueOne !== valueTwo):
@@ -41,7 +39,7 @@ const getDiffNode = (valueOne, valueTwo, key) => {
   }
 };
 
-function getDiffAST(dataOne, dataTwo) {
+const getDiffAST = (dataOne, dataTwo) => {
   const keys = sortBy(uniq([
     ...Object.keys(dataOne ?? {}),
     ...Object.keys(dataTwo ?? {}),
@@ -50,11 +48,14 @@ function getDiffAST(dataOne, dataTwo) {
   return keys.reduce((acc, key) => {
     const valueOne = dataOne[key];
     const valueTwo = dataTwo[key];
+    const diffNode = getDiffNode(valueOne, valueTwo, key);
+    const children = diffNode.type === 'nested' ? getDiffAST(valueOne, valueTwo) : undefined;
+
     return [
       ...acc,
-      getDiffNode(valueOne, valueTwo, key),
+      children ? { ...diffNode, children } : diffNode,
     ];
   }, []);
-}
+};
 
 export default getDiffAST;
