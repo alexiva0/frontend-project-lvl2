@@ -1,10 +1,9 @@
+import path from 'path';
 import genDiff from '../index.js';
-import buildGetPath from './utils/getPathFactory.js';
 
 describe('genDiff common tests', () => {
   test('Throw error on incompatible extention', () => {
-    const getPath = buildGetPath(import.meta.url, '../__fixtures__');
-    const filePath = getPath('incompatible.html');
+    const filePath = path.join('__fixtures__', 'incompatible.html');
 
     const invokeErrorCall = () => genDiff(filePath, filePath);
 
@@ -14,8 +13,7 @@ describe('genDiff common tests', () => {
   });
 
   test('Throw error on incompatible format', () => {
-    const getPath = buildGetPath(import.meta.url, '../__fixtures__/json');
-    const filePath = getPath('empty.json');
+    const filePath = path.join('__fixtures__/json', 'empty.json');
 
     const invokeErrorCall = () => genDiff(filePath, filePath, 'colourful');
 

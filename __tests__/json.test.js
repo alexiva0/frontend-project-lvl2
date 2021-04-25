@@ -1,84 +1,26 @@
+import path from 'path';
 import genDiff from '../index.js';
-import buildGetPath from './utils/getPathFactory.js';
 import stylishExpected from '../__fixtures__/expected/stylish.js';
 import plainExpected from '../__fixtures__/expected/plain.js';
 import jsonExpected from '../__fixtures__/expected/json.js';
 
-const BASE_JSON_PATH = '../__fixtures__/json';
+const BASE_JSON_PATH = '__fixtures__/json';
 
 describe('genDiff json support', () => {
-  const getOriginsPath = buildGetPath(import.meta.url, BASE_JSON_PATH);
-
-  describe('Stylish formatter', () => {
-    test('Empty files', () => {
-      const path = getOriginsPath('empty.json');
-
-      expect(genDiff(path, path)).toEqual(stylishExpected.empty);
-    });
-
-    test('Similar files', () => {
-      const path = getOriginsPath('similar.json');
-      expect(genDiff(path, path)).toEqual(stylishExpected.similar);
-    });
-
-    test('Shallow diff', () => {
-      const pathOne = getOriginsPath('shallowDiff1.json');
-      const pathTwo = getOriginsPath('shallowDiff2.json');
-      expect(genDiff(pathOne, pathTwo)).toEqual(stylishExpected.shallow);
-    });
-
-    test('Nested data', () => {
-      const pathOne = getOriginsPath('nested1.json');
-      const pathTwo = getOriginsPath('nested2.json');
-      expect(genDiff(pathOne, pathTwo)).toEqual(stylishExpected.nested);
-    });
-  });
-
-  describe('Plain formatter', () => {
-    test('Empty files', () => {
-      const path = getOriginsPath('empty.json');
-      expect(genDiff(path, path, 'plain')).toEqual(plainExpected.empty);
-    });
-
-    test('Similar files', () => {
-      const path = getOriginsPath('similar.json');
-      expect(genDiff(path, path, 'plain')).toEqual(plainExpected.similar);
-    });
-
-    test('Shallow diff', () => {
-      const pathOne = getOriginsPath('shallowDiff1.json');
-      const pathTwo = getOriginsPath('shallowDiff2.json');
-      expect(genDiff(pathOne, pathTwo, 'plain')).toEqual(plainExpected.shallow);
-    });
-
-    test('Nested data', () => {
-      const pathOne = getOriginsPath('nested1.json');
-      const pathTwo = getOriginsPath('nested2.json');
-      expect(genDiff(pathOne, pathTwo, 'plain')).toEqual(plainExpected.nested);
-    });
-  });
-
-  describe('JSON formatter', () => {
-    test('Empty files', () => {
-      const path = getOriginsPath('empty.json');
-      expect(genDiff(path, path, 'json')).toEqual(jsonExpected.empty);
-    });
-
-    test('Similar files', () => {
-      const path = getOriginsPath('similar.json');
-      expect(genDiff(path, path, 'json')).toEqual(jsonExpected.similar);
-    });
-
-    test('Shallow diff', () => {
-      const pathOne = getOriginsPath('shallowDiff1.json');
-      const pathTwo = getOriginsPath('shallowDiff2.json');
-      expect(genDiff(pathOne, pathTwo, 'json')).toEqual(jsonExpected.shallow);
-    });
-
-    test('Nested data', () => {
-      const pathOne = getOriginsPath('nested1.json');
-      const pathTwo = getOriginsPath('nested2.json');
-      expect(genDiff(pathOne, pathTwo, 'json')).toEqual(jsonExpected.nested);
+  describe.each([
+    ['stylish', stylishExpected],
+    ['plain', plainExpected],
+    ['json', jsonExpected],
+  ])('%s formatter', (format, expectedValues) => {
+    test.each([
+      ['Empty files', 'empty.json', 'empty.json', expectedValues.empty],
+      ['Similar files', 'similar.json', 'similar.json', expectedValues.similar],
+      ['Shallow diff', 'shallowDiff1.json', 'shallowDiff2.json', expectedValues.shallow],
+      ['Nested data', 'nested1.json', 'nested2.json', expectedValues.nested],
+    ])('%s', (_, fileOne, fileTwo, expectedValue) => {
+      const pathOne = path.join(BASE_JSON_PATH, fileOne);
+      const pathTwo = path.join(BASE_JSON_PATH, fileTwo);
+      expect(genDiff(pathOne, pathTwo, format)).toEqual(expectedValue);
     });
   });
 });
