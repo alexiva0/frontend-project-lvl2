@@ -17,10 +17,6 @@ jobs:
       - name: Run tests
         run: make test
       - name: Send tests coverage report
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
-          ./cc-test-reporter upload-coverage
+        uses: paambaati/codeclimate-action@v2.7.5
         env:
             CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
