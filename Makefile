@@ -4,10 +4,13 @@ install:
 publish:
 	npm publish --dry-run
 
+link:
+	npm link
+
 lint:
-	@npx eslint .
+	npm run lint
 
 test:
-	@NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
+	npm test
 
-.PHONY: install publish lint test
+.PHONY: install publish lint test link
