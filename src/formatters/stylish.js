@@ -1,4 +1,4 @@
-import { isObject } from 'lodash-es';
+import _ from 'lodash';
 
 const INDENT_CHAR = ' ';
 const ADDED_LINE_PREFIX = '+';
@@ -6,7 +6,7 @@ const DELETED_LINE_PREFIX = '-';
 const LINE_BREAK = '\n';
 
 const getObjectString = (data, depth) => {
-  if (!isObject(data)) {
+  if (!_.isObject(data)) {
     return data;
   }
 
@@ -24,7 +24,7 @@ const getObjectString = (data, depth) => {
 
 const getStylishLine = (indent, prefix, key, value) => `${indent}${prefix} ${key}: ${value}`;
 
-const getValueString = (value, depth) => (isObject(value)
+const getValueString = (value, depth) => (_.isObject(value)
   ? getObjectString(value, depth + 1)
   : value);
 

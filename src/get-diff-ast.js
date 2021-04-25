@@ -1,4 +1,4 @@
-import { uniq, isObject, sortBy } from 'lodash-es';
+import _ from 'lodash';
 
 const getDiffNode = (valueOne, valueTwo, key) => {
   switch (true) {
@@ -16,7 +16,7 @@ const getDiffNode = (valueOne, valueTwo, key) => {
         value: valueOne,
       };
 
-    case (isObject(valueOne) && isObject(valueTwo)):
+    case (_.isObject(valueOne) && _.isObject(valueTwo)):
       return {
         key,
         type: 'nested',
@@ -40,7 +40,7 @@ const getDiffNode = (valueOne, valueTwo, key) => {
 };
 
 const getDiffAST = (dataOne, dataTwo) => {
-  const keys = sortBy(uniq([
+  const keys = _.sortBy(_.uniq([
     ...Object.keys(dataOne ?? {}),
     ...Object.keys(dataTwo ?? {}),
   ]));

@@ -1,8 +1,8 @@
-import { isObject, isString } from 'lodash-es';
+import _ from 'lodash';
 
 const getValueString = (value) => {
-  if (isObject(value)) return '[complex value]';
-  return isString(value) ? `'${value}'` : value;
+  if (_.isObject(value)) return '[complex value]';
+  return _.isString(value) ? `'${value}'` : value;
 };
 
 const getLinePostfix = (diff) => {
