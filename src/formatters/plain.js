@@ -5,35 +5,30 @@ const getValueString = (value) => {
   return _.isString(value) ? `'${value}'` : value;
 };
 
-const getLinePostfix = (diff) => {
-  switch (diff.type) {
-    case 'added':
-      return ` with value: ${getValueString(diff.value)}`;
-    case 'removed':
-      return '';
-    default:
-      return `. From ${getValueString(diff.oldValue)} to ${getValueString(diff.value)}`;
-  }
-};
-
-const getPlainLine = (diff, path) => `Property '${path}' was ${diff.type}${getLinePostfix(diff)}`;
-
 const formatPlain = (diffAST) => {
-  const getPlainOutput = (data, path = '') => {
-    const nodesToPrint = data.filter(({ type }) => type !== 'unchanged');
+  const stringify = (diffNode, path = '') => {
+    const { key, value, type } = diffNode;
+    const currPath = path === '' ? key : `${path}.${key}`;
 
-    return nodesToPrint.map((diffNode) => {
-      const fullPath = path === '' ? diffNode.key : `${path}.${diffNode.key}`;
-
-      if (diffNode.type === 'nested') {
-        return getPlainOutput(diffNode.children, fullPath);
-      }
-
-      return getPlainLine(diffNode, fullPath);
-    }).join('\n');
+    switch (type) {
+      case 'unchanged':
+        return null;
+      case 'nested':
+        return diffNode.children.map((childDiffNode) => stringify(childDiffNode, currPath));
+      case 'added':
+        return `Property '${currPath}' was added with value: ${getValueString(
+          value,
+        )}`;
+      case 'removed':
+        return `Property '${currPath}' was removed`;
+      default:
+        return `Property '${currPath}' was updated. From ${getValueString(
+          diffNode.oldValue,
+        )} to ${getValueString(value)}`;
+    }
   };
 
-  return getPlainOutput(diffAST);
+  return _.flattenDeep(diffAST.map((diffNode) => stringify(diffNode))).filter((line) => Boolean(line)).join('\n');
 };
 
 export default formatPlain;
