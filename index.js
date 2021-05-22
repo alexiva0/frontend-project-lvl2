@@ -1,6 +1,6 @@
 import getFileContent from './src/get-file-content.js';
 import buildDiffAST from './src/build-diff-ast.js';
-import getFormatter from './src/formatters/index.js';
+import formatOutput from './src/formatters/index.js';
 
 const genDiff = (pathOne, pathTwo, format = 'stylish') => {
   const fileOneContent = getFileContent(pathOne);
@@ -8,9 +8,7 @@ const genDiff = (pathOne, pathTwo, format = 'stylish') => {
 
   const diffAST = buildDiffAST(fileOneContent, fileTwoContent);
 
-  const formatter = getFormatter(format);
-
-  return formatter(diffAST);
+  return formatOutput(diffAST, format);
 };
 
 export default genDiff;

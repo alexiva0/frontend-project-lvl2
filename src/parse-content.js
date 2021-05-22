@@ -8,12 +8,12 @@ const PARSERS = {
   [YAML_EXTENSION]: YAML.parse,
 };
 
-const getContentParser = (fileExt) => {
+const parseContent = (rawContent, fileExt) => {
   if (!(fileExt in PARSERS)) {
     throw new Error(`Comparison of '${fileExt}' files is not supported.`);
   }
 
-  return PARSERS[fileExt];
+  return PARSERS[fileExt](rawContent);
 };
 
-export default getContentParser;
+export default parseContent;

@@ -8,12 +8,12 @@ const FORMATTERS = {
   json: formatJson,
 };
 
-const getFormatter = (format) => {
+const formatOutput = (diffAST, format) => {
   if (!(format in FORMATTERS)) {
     throw new Error(`Format ${format} is not supported.`);
   }
 
-  return FORMATTERS[format];
+  return FORMATTERS[format](diffAST);
 };
 
-export default getFormatter;
+export default formatOutput;
