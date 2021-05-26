@@ -20,7 +20,9 @@ const stringifyObject = (data, depth) => {
   return ['{', ...lines, `${bracketsIndent}}`].join(LINE_BREAK);
 };
 
-const stringifyValue = (value, depth) => (_.isObject(value) ? stringifyObject(value, depth + 1) : value);
+const stringifyValue = (value, depth) => (_.isObject(value)
+  ? stringifyObject(value, depth + 1)
+  : value);
 
 const stringify = (indent, prefix, key, value, depth) => `${indent}${prefix} ${key}: ${stringifyValue(value, depth)}`;
 
