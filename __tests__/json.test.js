@@ -3,8 +3,10 @@ import genDiff from '../index.js';
 import stylishExpected from '../__fixtures__/expected/stylish.js';
 import plainExpected from '../__fixtures__/expected/plain.js';
 import jsonExpected from '../__fixtures__/expected/json.js';
+import getDirname from '../tools/get-dirname.js';
 
-const BASE_JSON_PATH = '__fixtures__/json';
+const __dirname = getDirname(import.meta.url);
+const BASE_JSON_PATH = path.join(__dirname, '..', '__fixtures__/json');
 
 describe('genDiff json support', () => {
   describe.each([
@@ -15,7 +17,12 @@ describe('genDiff json support', () => {
     test.each([
       ['Empty files', 'empty.json', 'empty.json', expectedValues.empty],
       ['Similar files', 'similar.json', 'similar.json', expectedValues.similar],
-      ['Shallow diff', 'shallowDiff1.json', 'shallowDiff2.json', expectedValues.shallow],
+      [
+        'Shallow diff',
+        'shallowDiff1.json',
+        'shallowDiff2.json',
+        expectedValues.shallow,
+      ],
       ['Nested data', 'nested1.json', 'nested2.json', expectedValues.nested],
     ])('%s', (_, fileOne, fileTwo, expectedValue) => {
       const pathOne = path.join(BASE_JSON_PATH, fileOne);

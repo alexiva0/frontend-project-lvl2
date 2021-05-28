@@ -3,8 +3,10 @@ import genDiff from '../index.js';
 import stylishExpected from '../__fixtures__/expected/stylish.js';
 import plainExpected from '../__fixtures__/expected/plain.js';
 import jsonExpected from '../__fixtures__/expected/json.js';
+import getDirname from '../tools/get-dirname.js';
 
-const BASE_YML_PATH = '__fixtures__/yml';
+const __dirname = getDirname(import.meta.url);
+const BASE_YML_PATH = path.join(__dirname, '..', '__fixtures__/yml');
 
 const expectedValues = {
   stylish: stylishExpected.nested,
